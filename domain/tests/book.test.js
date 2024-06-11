@@ -5,7 +5,7 @@ describe('Book', () => {
   let myBook;
 
   beforeEach(() => {
-    myBook = new Book('Cuentos de la Selva', 'Horacio Quiroga', 350);
+    myBook = new Book('Cuentos de la Selva', 'Horacio Quiroga', 350, 700);
   });
 
   it('return the correct title', () => {
@@ -20,6 +20,14 @@ describe('Book', () => {
     expect(myBook.getPages()).toBe(350);
   });
 
+  it('return the correct number of words', () => {
+    expect(myBook.getWords()).toBe(700);
+  });
+
+  it('return the correct wordsPerPage()', () => {
+    expect(myBook.wordsPerPage()).toBe(2);
+  });
+
   it('check title is a string', () => {
     expect(() => myBook = new Book(451, 1, 350)).toThrow();
   });
@@ -29,18 +37,48 @@ describe('Book', () => {
   });
 
   it('check author is a string', () => {
-    // TODO
+    expect(() => myBook = new Book(451, 1, 350)).toThrow();
+  });
+
+  it('check author is empty', () => {
+    expect(() => myBook = new Book(451, '', 350)).toThrow();
   });
 
   it('check page param is a number', () => {
-    // TODO
+    expect(() => myBook = new Book(451, 1, 'Pages')).toThrow();
   });
 
   it('check pages not < 1', () => {
-    // TODO
+    expect(() => myBook = new Book(451, 1, -350)).toThrow();
   });
+
+  it('check setAuthor() Not Valid', () => {
+    expect(() => myBook.setAuthor(123)).toThrow();
+  });
+
+  it('check setAuthor() empty', () => {
+    myBook.setAuthor('');
+    expect(myBook.getAuthor()).toBe('Anónimo');
+  });
+
+  it('check setPages() NaN', () => {
+    expect(() => myBook.setPages('NaN')).toThrow();
+  });
+
+  it('check setPages() < 1', () => {
+    expect(() => myBook.setPages(-350)).toThrow();
+  });
+
+  it('check setWords() null', () => {
+    expect(() => myBook.setWords('NaN')).toThrow();
+  });
+
+  it('check setWords() < 1', () => {
+    expect(() => myBook.setWords(-350)).toThrow();
+  });
+
   it('toString()', () => {
-    // TODO
+    expect(myBook.toString()).toBe('Título: Cuentos de la Selva Autor: Horacio Quiroga Páginas: 350 Palabras: 700');
   });
 
 });
